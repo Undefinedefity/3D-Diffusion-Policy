@@ -2,7 +2,8 @@ bin
 logs
 wandb
 outputs
-data
+*.zarr
+./data/*/
 data_local
 .vscode
 _wandb
