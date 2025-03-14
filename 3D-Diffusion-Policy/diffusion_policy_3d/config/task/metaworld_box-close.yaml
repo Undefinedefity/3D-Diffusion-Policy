@@ -10,6 +10,9 @@ shape_meta: &shape_meta
     agent_pos:
       shape: [9]
       type: low_dim
+    img:
+      shape: [3, 128, 128]
+      type: rgb
   action:
     shape: [4]
 
