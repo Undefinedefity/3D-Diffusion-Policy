@@ -50,6 +50,7 @@ def print_zarr_info(zarr_path):
 
 def main():
     # 可以修改为你的zarr文件路径
+    # zarr_path = "./adroit_hammer_expert.zarr"
     zarr_path = "./metaworld_box-close_expert.zarr"
     
     # 打印文件信息

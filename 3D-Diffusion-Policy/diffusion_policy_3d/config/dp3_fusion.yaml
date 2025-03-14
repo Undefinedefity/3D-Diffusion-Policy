@@ -44,7 +44,7 @@ policy:
   # 新增RGB图像相关配置
   use_rgb_image: true
   image_encoder_out_dim: 64
-  img_size: [224, 224]
+  image_size: [224, 224]
 
   noise_scheduler:
     _target_: diffusers.schedulers.scheduling_ddim.DDIMScheduler
@@ -122,7 +122,7 @@ logging:
   group: ${exp_name}
   id: null
   mode: online
-  name: ${training.seed}
+  name: ${exp_name}
   project: dp3_fusion
   resume: true
   tags:
