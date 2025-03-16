@@ -127,17 +127,20 @@ class ResNetEncoder(nn.Module):
     
     def forward(self, observations: Dict) -> torch.Tensor:
         # 获取图像输入
-        images = observations[self.rgb_image_key]
+        images = observations['img']
         
         # 确保图像格式正确 [B, C, H, W]
-        if len(images.shape) == 4:  # [B, H, W, C]
-            images = images.permute(0, 3, 1, 2)  # 转换为[B, C, H, W]
-        elif len(images.shape) == 5:  # [B, T, H, W, C]
-            B, T, H, W, C = images.shape
-            images = images.reshape(B * T, H, W, C)
-            images = images.permute(0, 3, 1, 2)  # 转换为[B*T, C, H, W]
+        if len(images.shape) == 4:  # [B, C, H, W] 或 [B, H, W, C]
+            if images.shape[1] > images.shape[-1]:  # 如果是 [B, H, W, C]
+                images = images.permute(0, 3, 1, 2)  # 转换为 [B, C, H, W]
+        elif len(images.shape) == 5:  # [B, T, C, H, W] 或 [B, T, H, W, C]
+            B, T = images.shape[:2]
+            if images.shape[2] > images.shape[-1]:  # 如果是 [B, T, H, W, C]
+                images = images.permute(0, 1, 4, 2, 3)  # 转换为 [B, T, C, H, W]
+            images = images.reshape(B * T, images.shape[2], images.shape[3], images.shape[4])
         else:
             raise ValueError(f"Unexpected image shape: {images.shape}")
+        
         
         # 通过ResNet骨干网络
         features = self.backbone(images)

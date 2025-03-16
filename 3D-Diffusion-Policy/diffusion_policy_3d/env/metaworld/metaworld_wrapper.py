@@ -78,7 +78,7 @@ class MetaWorldEnv(gym.Env):
         
     
         self.observation_space = spaces.Dict({
-            'image': spaces.Box(
+            'img': spaces.Box(
                 low=0,
                 high=255,
                 shape=(3, self.image_size, self.image_size),
@@ -164,11 +164,12 @@ class MetaWorldEnv(gym.Env):
         robot_state = self.get_robot_state()
         point_cloud, depth = self.get_point_cloud()
         
-        if obs_pixels.shape[0] != 3:
+        # 确保图像格式为 [C, H, W]
+        if obs_pixels.shape[-1] == 3:  # 如果是 [H, W, C]
             obs_pixels = obs_pixels.transpose(2, 0, 1)
 
         obs_dict = {
-            'image': obs_pixels,
+            'img': obs_pixels,  # 现在应该是 [C, H, W] 格式
             'depth': depth,
             'agent_pos': robot_state,
             'point_cloud': point_cloud,
@@ -190,7 +191,7 @@ class MetaWorldEnv(gym.Env):
             obs_pixels = obs_pixels.transpose(2, 0, 1)
 
         obs_dict = {
-            'image': obs_pixels,
+            'img': obs_pixels,
             'depth': depth,
             'agent_pos': robot_state,
             'point_cloud': point_cloud,
@@ -215,7 +216,7 @@ class MetaWorldEnv(gym.Env):
             obs_pixels = obs_pixels.transpose(2, 0, 1)
 
         obs_dict = {
-            'image': obs_pixels,
+            'img': obs_pixels,
             'depth': depth,
             'agent_pos': robot_state,
             'point_cloud': point_cloud,

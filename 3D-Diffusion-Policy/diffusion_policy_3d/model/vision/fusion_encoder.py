@@ -69,7 +69,7 @@ class FusionEncoder(nn.Module):
         point_cloud_features = self.point_cloud_encoder(observations)
         
         # 如果使用RGB图像，获取图像特征并拼接
-        if self.use_rgb_image and self.image_encoder is not None:
+        if self.use_rgb_image and self.image_encoder is not None and self.rgb_image_key in observations:
             image_features = self.image_encoder(observations)
             features = torch.cat([point_cloud_features, image_features], dim=-1)
         else:
