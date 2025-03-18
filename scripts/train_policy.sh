@@ -5,7 +5,10 @@
 # bash scripts/train_policy.sh dp3 metaworld_basketball 0602 0 0
 
 
-
+#FIXME: when DEBUG mode is True, it will raise an error:
+#  File "/data/lidaifeng/3D-Diffusion-Policy/3D-Diffusion-Policy/diffusion_policy_3d/common/checkpoint_util.py", line 26, in get_ckpt_path
+#    value = data[self.monitor_key]
+# KeyError: 'test_mean_score'
 DEBUG=False
 save_ckpt=True
 
